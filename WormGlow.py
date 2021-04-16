@@ -13,11 +13,9 @@ def masking_macro(image_plus, dialog_value):
     IJ.run(image_plus, "Auto Threshold", "method=Minimum white")
     Macro.setOptions("BlackBackground")
     for i in range(0,dialog_value):
-        IJ.run(image_plus, "Dilate", "slice")
-#    IJ.run("Create Selection")   
+        IJ.run(image_plus, "Dilate", "slice")  
     IJ.run("Analyze Particles...", "size=5000-Infinity show=Masks add in_situ")
     IJ.run("Create Selection")
-#    roi_manager.rename(0, "mask")
 
 def run_script():
 
@@ -31,10 +29,6 @@ def run_script():
     orig_selection = imgplus.getOverlay()  # Object containing line selections
     transform.setOverlay(orig_selection)
     line_selection = transform.getOverlay().iterator()
-
-#    straight = Straightener()
-#    for line in orig_selection.iterator():
-#        straight.straightenStack(imgplus, line, 100)
     
     number_worms = 1  # Counter for number of worms selected
 
@@ -85,57 +79,6 @@ def run_script():
         number_worms += 1  # Increments worm number bc iterator can only be FIFO
 
     IJ.run("Surface Plot...", "polygon=100 shade draw_axis smooth stack")  # Runs "Surface Plot" with default options
-    
-#    results = imp.getStatistics()    
-#    IJ.log("Overall statistics for DIC image: " + str(results))
-#
-#    stack = imgplus.getImageStack()
-#    size = stack.getSize()
-#
-#    current_RoiManager = RoiManager().getInstance2()
-#    select_region = RoiManager().getInstance2().getRoi(0)
-#    IJ.log("ROI Selection: " + str(select_region)) 
-#    IJ.log("\n")
-
-#    output_data = []
-#    for i in range(1, size+1):  # iterates through stack
-#        inner_list = []
-#        inner_list.append(stack.getSliceLabel(i)[:-4])  # adds slice name to output list
-#        current_slice = stack.getProcessor(i)  # gets ImageProcessor object for image
-#        new_imgplus = ImagePlus(stack.getSliceLabel(i), current_slice)  # creates new ImagePlus object with slice
-#        new_imgplus.setRoi(select_region)  # adds ROI to new ImagePlus
-#        indiv_stats = new_imgplus.getRoi().getStatistics()  #  Gets statistics for new selected region
-#        IJ.log("Current Slice: " + stack.getSliceLabel(i)[:-4])
-#        IJ.log("Summary Statistics: " + str(indiv_stats))
-##        print(indiv_stats.histogram())
-#        hist = HistogramWindow("Histogram for " + stack.getSliceLabel(i)[:-4], new_imgplus, indiv_stats)
-#        hist.showHistogram(new_imgplus, indiv_stats)
-#        IJ.log("\n")
-
-#        IJ.run("Plot Profile")
-
-#    with open("/Users/nathansiu/Desktop/Control_1.txt") as f:
-#        reader = csv.reader(f, delimiter="\t")
-#        d = list(reader)
-#    print d[0][0]
-
-
-## Keep commented
-#    statistics = imgplus.getRoi().getStatistics()
-#    print(statistics.area)
-#    print(statistics.mean)
-
-#    IJ.run(imp, "Threshold...","220,225")
-
-#    output_img = Duplicator().run(imp)
-#    output_img.setRoi(selection)  # Setting cropping boundaries to bounds ROI
-#    IJ.run(output_img, 'Crop', '')
-#    output_img.setTitle('selection')  # Naming image sequential
-#    output_img.show()
-#
-#    file_output = FileSaver(output_img)
-#    output_filename = "/Users/nathansiu/Desktop/temp/" + output_img.getTitle() + ".jpg"
-#    file_output.saveAsJpeg(output_filename)
 
 if __name__ in ['__builtin__', '__main__']:
     run_script()
